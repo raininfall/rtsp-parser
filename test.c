@@ -133,7 +133,282 @@ const struct message requests[] =
     , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
     }
   ,.body= ""
-  }
+  },
+
+#define STANDARD_SETUP 2
+ {.name= "vlc setup"
+  ,.type= HTTP_REQUEST
+  ,.raw= "SETUP rtsp://192.168.1.101/live/trackID=0 RTSP/1.0\r\n"
+         "CSeq: 3\r\n"
+         "Transport: RTP/AVP/TCP;unicast;interleaved=0-1\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_SETUP
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live/trackID=0"
+  ,.request_url = "rtsp://192.168.1.101/live/trackID=0"
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "3" }
+    , { "Transport", "RTP/AVP/TCP;unicast;interleaved=0-1" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_PLAY 3
+ {.name= "vlc play"
+  ,.type= HTTP_REQUEST
+  ,.raw= "PLAY rtsp://192.168.1.101/live RTSP/1.0\r\n"
+         "CSeq: 4\r\n"
+         "Session: 6310936469860791894\r\n"
+         "Range: npt=0.000-\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_PLAY
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live"
+  ,.request_url = "rtsp://192.168.1.101/live"
+  ,.num_headers= 4
+  ,.headers=
+    { { "CSeq", "4" }
+    , { "Session", "6310936469860791894" }
+    , { "Range", "npt=0.000-"}
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_PAUSE 4
+ {.name= "vlc pause"
+  ,.type= HTTP_REQUEST
+  ,.raw= "PAUSE rtsp://192.168.1.101/live RTSP/1.0\r\n"
+         "CSeq: 5\r\n"
+         "Session: 6310936469860791894\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_PAUSE
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live"
+  ,.request_url = "rtsp://192.168.1.101/live"
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "5" }
+    , { "Session", "6310936469860791894" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_RECORD 5
+ {.name= "vlc pause"
+  ,.type= HTTP_REQUEST
+  ,.raw= "RECORD rtsp://192.168.1.101/live RTSP/1.0\r\n"
+         "CSeq: 6\r\n"
+         "Session: 6310936469860791894\r\n"
+         "Conference: 128.16.64.19/32492374\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_RECORD
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live"
+  ,.request_url = "rtsp://192.168.1.101/live"
+  ,.num_headers= 4
+  ,.headers=
+    { { "CSeq", "6" }
+    , { "Session", "6310936469860791894" }
+    , { "Conference", "128.16.64.19/32492374" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_TEARDOWN 6
+ {.name= "vlc teardown"
+  ,.type= HTTP_REQUEST
+  ,.raw= "TEARDOWN rtsp://192.168.1.101/live RTSP/1.0\r\n"
+         "CSeq: 7\r\n"
+         "Session: 6310936469860791894\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_TEARDOWN
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live"
+  ,.request_url = "rtsp://192.168.1.101/live"
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "7" }
+    , { "Session", "6310936469860791894" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_ANNOUNCE 7
+ {.name= "vlc announce"
+  ,.type= HTTP_REQUEST
+  ,.raw= "ANNOUNCE rtsp://192.168.1.101/live/trackID=1 RTSP/1.0\r\n"
+         "CSeq: 8\r\n"
+         "Session: 6310936469860791894\r\n"
+         "Date: 23 Jan 1997 15:35:06 GMT\r\n"
+         "Content-Type: application/sdp\r\n"
+         "Content-Length: 317\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+         "v=0\r\n"
+         "o=mhandley 2890844526 2890845468 IN IP4 126.16.64.4\r\n"
+         "s=SDP Seminar\r\n"
+         "i=A Seminar on the session description protocol\r\n"
+         "u=http://www.cs.ucl.ac.uk/staff/M.Handley/sdp.03.ps\r\n"
+         "e=mjh@isi.edu (Mark Handley)\r\n"
+         "c=IN IP4 224.2.17.12/127\r\n"
+         "t=2873397496 2873404696\r\n"
+         "a=recvonly\r\n"
+         "m=audio 3456 RTP/AVP 0\r\n"
+         "m=video 2232 RTP/AVP 31\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_ANNOUNCE
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live/trackID=1"
+  ,.request_url = "rtsp://192.168.1.101/live/trackID=1"
+  ,.num_headers= 6
+  ,.headers=
+    { { "CSeq", "8" }
+    , { "Session", "6310936469860791894" }
+    , { "Date", "23 Jan 1997 15:35:06 GMT" }
+    , { "Content-Type", "application/sdp" }
+    , { "Content-Length", "317" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= "v=0\r\n"
+          "o=mhandley 2890844526 2890845468 IN IP4 126.16.64.4\r\n"
+          "s=SDP Seminar\r\n"
+          "i=A Seminar on the session description protocol\r\n"
+          "u=http://www.cs.ucl.ac.uk/staff/M.Handley/sdp.03.ps\r\n"
+          "e=mjh@isi.edu (Mark Handley)\r\n"
+          "c=IN IP4 224.2.17.12/127\r\n"
+          "t=2873397496 2873404696\r\n"
+          "a=recvonly\r\n"
+          "m=audio 3456 RTP/AVP 0\r\n"
+          "m=video 2232 RTP/AVP 31\r\n"
+  },
+
+#define STANDARD_GET_PARAMETER 8
+ {.name= "vlc get parameter"
+  ,.type= HTTP_REQUEST
+  ,.raw= "GET_PARAMETER rtsp://192.168.1.101/live/trackID=1 RTSP/1.0\r\n"
+         "CSeq: 9\r\n"
+         "Session: 6310936469860791894\r\n"
+         "Content-Type: text/parameters\r\n"
+         "Content-Length: 24\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+         "packets_received\r\n"
+         "jitter"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_GET_PARAMETER
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live/trackID=1"
+  ,.request_url = "rtsp://192.168.1.101/live/trackID=1"
+  ,.num_headers= 5
+  ,.headers=
+    { { "CSeq", "9" }
+    , { "Session", "6310936469860791894" }
+    , { "Content-Type", "text/parameters" }
+    , { "Content-Length", "24" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= "packets_received\r\n"
+          "jitter"
+  },
+
+#define STANDARD_SET_PARAMETER 9
+ {.name= "vlc set parameter"
+  ,.type= HTTP_REQUEST
+  ,.raw= "SET_PARAMETER rtsp://192.168.1.101/live/trackID=1 RTSP/1.0\r\n"
+         "CSeq: 10\r\n"
+         "Content-Type: text/parameters\r\n"
+         "Content-Length: 20\r\n"
+         "User-Agent: VLC media player (LIVE555 Streaming Media v2005.11.10)\r\n"
+         "\r\n"
+         "barparam: barstuff\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_SET_PARAMETER
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live/trackID=1"
+  ,.request_url = "rtsp://192.168.1.101/live/trackID=1"
+  ,.num_headers= 4
+  ,.headers=
+    { { "CSeq", "10" }
+    , { "Content-Type", "text/parameters" }
+    , { "Content-Length", "20" }
+    , { "User-Agent", "VLC media player (LIVE555 Streaming Media v2005.11.10)" }
+    }
+  ,.body= "barparam: barstuff\r\n"
+  },
+
+#define STANDARD_REDIRECT 10
+ {.name= "vlc set redirect"
+  ,.type= HTTP_REQUEST
+  ,.raw= "REDIRECT rtsp://192.168.1.101/live/trackID=1 RTSP/1.0\r\n"
+         "CSeq: 11\r\n"
+         "Location: rtsp://bigserver.com:8001\r\n"
+         "Range: clock=19960213T143205Z-\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.method = HTTP_REDIRECT
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= "/live/trackID=1"
+  ,.request_url = "rtsp://192.168.1.101/live/trackID=1"
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "11" }
+    , { "Location", "rtsp://bigserver.com:8001" }
+    , { "Range", "clock=19960213T143205Z-" }
+    }
+  ,.body= ""
+  },
 };
 
 size_t
@@ -554,7 +829,6 @@ void test_message(const struct message *message) {
     size_t msg2len = raw_len - msg1len;
     
     parser_init(message->type);
-
     if (msg1len) {
       assert(num_messages == 0);
       messages[0].headers_complete_cb_called = FALSE;

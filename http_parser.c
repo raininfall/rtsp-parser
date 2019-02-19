@@ -964,7 +964,7 @@ reexecute:
           UPDATE_STATE(s_req_spaces_before_url);
         } else if (ch == matcher[parser->index]) {
           ; /* nada */
-        } else if ((ch >= 'A' && ch <= 'Z') || ch == '-') {
+        } else if ((ch >= 'A' && ch <= 'Z') || ch == '_') {
 
           switch (parser->method << 16 | parser->index << 8 | ch) {
 #define XX(meth, pos, ch, new_meth) \
