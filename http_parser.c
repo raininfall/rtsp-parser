@@ -1,4 +1,5 @@
-/* Copyright Joyent, Inc. and other Node contributors.
+/* - 2019 Copyright Joyent, Inc. and other Node contributors.
+ * 2019 Copyright RainInFall.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -752,7 +753,7 @@ reexecute:
             goto error;
           }
           parser->type = HTTP_REQUEST;
-          parser->method = HTTP_RECORD;
+          parser->method = RTSP_RECORD;
           parser->index = 2;
           UPDATE_STATE(s_req_method);
         }
@@ -932,14 +933,14 @@ reexecute:
         parser->method = (enum http_method) 0;
         parser->index = 1;
         switch (ch) {
-          case 'A': parser->method = HTTP_ANNOUNCE; break;
-          case 'D': parser->method = HTTP_DESCRIBE; break;
-          case 'G': parser->method = HTTP_GET_PARAMETER; break;
-          case 'O': parser->method = HTTP_OPTIONS; break;
-          case 'P': parser->method = HTTP_PAUSE; break;
-          case 'R': parser->method = HTTP_RECORD; /* or REBIND */ break;
-          case 'S': parser->method = HTTP_SETUP; /* or SEARCH, SOURCE */ break;
-          case 'T': parser->method = HTTP_TEARDOWN; break;
+          case 'A': parser->method = RTSP_ANNOUNCE; break;
+          case 'D': parser->method = RTSP_DESCRIBE; break;
+          case 'G': parser->method = RTSP_GET_PARAMETER; break;
+          case 'O': parser->method = RTSP_OPTIONS; break;
+          case 'P': parser->method = RTSP_PAUSE; break;
+          case 'R': parser->method = RTSP_RECORD; /* or REBIND */ break;
+          case 'S': parser->method = RTSP_SETUP; /* or SEARCH, SOURCE */ break;
+          case 'T': parser->method = RTSP_TEARDOWN; break;
           default:
             SET_ERRNO(HPE_INVALID_METHOD);
             goto error;
@@ -968,8 +969,8 @@ reexecute:
 
           switch (parser->method << 16 | parser->index << 8 | ch) {
 #define XX(meth, pos, ch, new_meth) \
-            case (HTTP_##meth << 16 | pos << 8 | ch): \
-              parser->method = HTTP_##new_meth; break;
+            case (RTSP_##meth << 16 | pos << 8 | ch): \
+              parser->method = RTSP_##new_meth; break;
 
             XX(PAUSE,     1, 'L', PLAY)
             XX(RECORD,    2, 'D', REDIRECT)

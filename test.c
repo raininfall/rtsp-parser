@@ -84,9 +84,9 @@ struct message messages[5];
 int num_messages;
 int currently_parsing_eof;
 
-const struct message requests[] =
+const struct message requests[] = {
 #define STANDART_OPTIONS 0
-{ {.name= "vlc options"
+ {.name= "vlc options"
   ,.type= HTTP_REQUEST
   ,.raw= "OPTIONS rtsp://192.168.1.101/live RTSP/1.0\r\n"
          "CSeq: 1\r\n"
@@ -96,7 +96,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_OPTIONS
+  ,.method = RTSP_OPTIONS
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -121,7 +121,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_DESCRIBE
+  ,.method = RTSP_DESCRIBE
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -147,7 +147,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_SETUP
+  ,.method = RTSP_SETUP
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live/trackID=0"
@@ -174,7 +174,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_PLAY
+  ,.method = RTSP_PLAY
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -201,7 +201,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_PAUSE
+  ,.method = RTSP_PAUSE
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -228,7 +228,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_RECORD
+  ,.method = RTSP_RECORD
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -255,7 +255,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_TEARDOWN
+  ,.method = RTSP_TEARDOWN
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live"
@@ -295,7 +295,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_ANNOUNCE
+  ,.method = RTSP_ANNOUNCE
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live/trackID=1"
@@ -338,7 +338,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_GET_PARAMETER
+  ,.method = RTSP_GET_PARAMETER
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live/trackID=1"
@@ -369,7 +369,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_SET_PARAMETER
+  ,.method = RTSP_SET_PARAMETER
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live/trackID=1"
@@ -396,7 +396,7 @@ const struct message requests[] =
   ,.message_complete_on_eof = 0
   ,.http_major = 1
   ,.http_minor = 0
-  ,.method = HTTP_REDIRECT
+  ,.method = RTSP_REDIRECT
   ,.query_string = ""
   ,.fragment = ""
   ,.request_path= "/live/trackID=1"
@@ -406,6 +406,201 @@ const struct message requests[] =
     { { "CSeq", "11" }
     , { "Location", "rtsp://bigserver.com:8001" }
     , { "Range", "clock=19960213T143205Z-" }
+    }
+  ,.body= ""
+  },
+};
+
+const struct message responses[] = {
+#define STANDARD_OPTIONS_RESPONSE 0
+  {.name= "options response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "Public: DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, OPTIONS, ANNOUNCE, RECORD\r\n"
+         "CSeq: 1\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 2
+  ,.headers=
+    { { "Public", "DESCRIBE, SETUP, TEARDOWN, PLAY, PAUSE, OPTIONS, ANNOUNCE, RECORD" }
+    , { "CSeq", "1" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_DESCRIBE_RESPONSE 1
+  {.name= "describe response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "CSeq: 2\r\n"
+         "Session: gs6ihI9iR\r\n"
+         "Content-Length: 542\r\n"
+         "\r\n"
+         "v=0\r\n"
+         "o=- 0 0 IN IP4 127.0.0.1\r\n"
+         "s=EasyDarwin\r\n"
+         "i=EasyDarwin\r\n"
+         "c=IN IP4 127.0.0.1\r\n"
+         "t=0 0\r\n"
+         "a=x-qt-text-nam:EasyDarwin\r\n"
+         "a=x-qt-text-inf:EasyDarwin\r\n"
+         "a=x-qt-text-cmt:source application::EasyDarwin\r\n"
+         "a=x-qt-text-aut:\r\n"
+         "a=x-qt-text-cpy:\r\n"
+         "m=video 0 RTP/AVP 96\r\n"
+         "a=rtpmap:96 H264/90000\r\n"
+         "a=fmtp:96 packetization-mode=1;sprop-parameter-sets=\r\n"
+         "a=control:streamid=0\r\n"
+         "m=audio 0 RTP/AVP 97\r\n"
+         "a=rtpmap:97 MPEG4-GENERIC/44100/2\r\n"
+         "a=fmtp:97 streamtype=5;profile-level-id=1;mode=AAC-hbr;sizelength=13;indexlength=3;indexdeltalength=3;config=1210\r\n"
+         "a=control:streamid=1\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "2" }
+    , { "Session", "gs6ihI9iR" }
+    , { "Content-Length", "542" }
+    }
+  ,.body= "v=0\r\n"
+         "o=- 0 0 IN IP4 127.0.0.1\r\n"
+         "s=EasyDarwin\r\n"
+         "i=EasyDarwin\r\n"
+         "c=IN IP4 127.0.0.1\r\n"
+         "t=0 0\r\n"
+         "a=x-qt-text-nam:EasyDarwin\r\n"
+         "a=x-qt-text-inf:EasyDarwin\r\n"
+         "a=x-qt-text-cmt:source application::EasyDarwin\r\n"
+         "a=x-qt-text-aut:\r\n"
+         "a=x-qt-text-cpy:\r\n"
+         "m=video 0 RTP/AVP 96\r\n"
+         "a=rtpmap:96 H264/90000\r\n"
+         "a=fmtp:96 packetization-mode=1;sprop-parameter-sets=\r\n"
+         "a=control:streamid=0\r\n"
+         "m=audio 0 RTP/AVP 97\r\n"
+         "a=rtpmap:97 MPEG4-GENERIC/44100/2\r\n"
+         "a=fmtp:97 streamtype=5;profile-level-id=1;mode=AAC-hbr;sizelength=13;indexlength=3;indexdeltalength=3;config=1210\r\n"
+         "a=control:streamid=1\r\n"
+  },
+
+#define STANDARD_SETUP_RESPONSE 2
+  {.name= "setup response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "CSeq: 3\r\n"
+         "Session: gs6ihI9iR\r\n"
+         "Transport: RTP/AVP;unicast;client_port=2274-2275\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 3
+  ,.headers=
+    { { "CSeq", "3" }
+    , { "Session", "gs6ihI9iR" }
+    , { "Transport", "RTP/AVP;unicast;client_port=2274-2275" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_PLAY_RESPONSE 3
+  {.name= "play response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "Range: npt=0.000-\r\n"
+         "CSeq: 4\r\n"
+         "Session: gs6ihI9iR\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 3
+  ,.headers=
+    { { "Range", "npt=0.000-" }
+    , { "CSeq", "4" }
+    , { "Session", "gs6ihI9iR" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_PAUSE_RESPONSE 4
+  {.name= "pause response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "CSeq: 5\r\n"
+         "Session: gs6ihI9iR\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 2
+  ,.headers=
+    { { "CSeq", "5" }
+    , { "Session", "gs6ihI9iR" }
+    }
+  ,.body= ""
+  },
+
+#define STANDARD_TEARDOWN_RESPONSE 5
+  {.name= "teardown response"
+  ,.type= HTTP_RESPONSE
+  ,.raw= "RTSP/1.0 200 OK\r\n"
+         "CSeq: 5\r\n"
+         "Session: gs6ihI9iR\r\n"
+         "\r\n"
+  ,.should_keep_alive = 1
+  ,.message_complete_on_eof = 0
+  ,.http_major = 1
+  ,.http_minor = 0
+  ,.status_code = HTTP_STATUS_OK
+  ,.response_status = "OK"
+  ,.query_string = ""
+  ,.fragment = ""
+  ,.request_path= ""
+  ,.request_url = ""
+  ,.num_headers= 2
+  ,.headers=
+    { { "CSeq", "5" }
+    , { "Session", "gs6ihI9iR" }
     }
   ,.body= ""
   },
@@ -873,6 +1068,10 @@ int main(void) {
 
   for (i = 0; i < ARRAY_SIZE(requests); i++) {
     test_message(&requests[i]);
+  }
+
+  for (i = 0; i < ARRAY_SIZE(responses); i++) {
+    test_message(&responses[i]);
   }
 
   return 0;
